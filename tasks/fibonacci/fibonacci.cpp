@@ -7,10 +7,10 @@ int64_t CalculateNthFibonacci(int64_t n) {
     if (n == 1){
         return 1;
     }
-    int a = 0;
-    int b = 1;
-    for (int i = 1; i < n; ++i) {
-        int t = b;
+    int64_t a = 0;
+    int64_t b = 1;
+    for (int64_t i = 1; i < n; ++i) {
+        int64_t t = b;
         b = a + b;
         a = t;
     }
