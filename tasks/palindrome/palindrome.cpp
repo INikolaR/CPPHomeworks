@@ -1,6 +1,9 @@
 #include "palindrome.h"
 
 bool IsPalindrome(const std::string& str) {
+    if (str.length() == 0) {
+        return true;
+    }
     uint64_t l = 0;
     uint64_t r = str.length() - 1;
     while (l < r) {
