@@ -7,14 +7,14 @@ bool IsPalindrome(const std::string& str) {
     size_t l = 0;
     size_t r = str.size() - 1;
     while (l < r) {
-        while (str[l] == ' ') {
+        if (str[l] == ' ') {
             ++l;
         }
-        while (str[r] == ' ') {
+        else if (str[r] == ' ') {
             --r;
         }
-        if (str[l] == str[r]) {
-            ++l;
+        else if (str[l] == str[r]) {
+            ++l;g
             --r;
         } else {
             return false;
