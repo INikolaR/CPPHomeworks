@@ -1,8 +1,8 @@
 #include "palindrome.h"
 
 bool IsPalindrome(const std::string& str) {
-    unsigned long long l = 0;
-    unsigned long long r = str.length() - 1;
+    uint64_t l = 0;
+    uint64_t r = str.length() - 1;
     while (l < r) {
         while (str[l] == ' ') {
             ++l;
