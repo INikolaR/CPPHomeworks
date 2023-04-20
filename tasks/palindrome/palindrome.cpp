@@ -9,11 +9,9 @@ bool IsPalindrome(const std::string& str) {
     while (l < r) {
         if (str[l] == ' ') {
             ++l;
-        }
-        else if (str[r] == ' ') {
+        } else if (str[r] == ' ') {
             --r;
-        }
-        else if (str[l] == str[r]) {
+        } else if (str[l] == str[r]) {
             ++l;
             --r;
         } else {
