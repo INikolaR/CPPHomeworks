@@ -13,11 +13,11 @@ bool IsPalindrome(const std::string& str) {
         while (str[r] == ' ') {
             --r;
         }
-        if (str[l] != str[r]) {
-            return false;
-        } else {
+        if (str[l] == str[r]) {
             ++l;
             --r;
+        } else {
+            return false;
         }
     }
     return true;
