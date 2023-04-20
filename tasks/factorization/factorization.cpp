@@ -1,6 +1,6 @@
 #include "factorization.h"
 
-#include <cstdint>
+#include <vector>
 
 std::vector<std::pair<int64_t, int>> Factorize(int64_t x) {
     std::vector<std::pair<int64_t, int>> ans = std::vector<std::pair<int64_t, int>>(0);
@@ -10,7 +10,12 @@ std::vector<std::pair<int64_t, int>> Factorize(int64_t x) {
             ++num;
             x /= i;
         }
-        ans.push_back({i, num});
+        if (num != 0) {
+            ans.push_back(std::make_pair(i, num));
+        }
+    }
+    if (x != 1) {
+        ans.push_back(std::make_pair(x, 1));
     }
     return ans;
 }
