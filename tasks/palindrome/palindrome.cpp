@@ -1,7 +1,7 @@
 #include "palindrome.h"
 
 bool IsPalindrome(const std::string& str) {
-    if (str.length() == 0) {
+    if (str.empty()) {
         return true;
     }
     uint64_t l = 0;
