@@ -17,4 +17,4 @@ struct Student {
 
 enum class SortKind { Name, Date };
 
-void SortStudents(std::vector<Student>& students, SortKind sortKind);
+void SortStudents(std::vector<Student>& students, SortKind sort_kind);
