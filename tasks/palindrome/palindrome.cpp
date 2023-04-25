@@ -1,5 +1,22 @@
 #include "palindrome.h"
 
 bool IsPalindrome(const std::string& str) {
-    return false;
+    if (str.empty()) {
+        return true;
+    }
+    size_t l = 0;
+    size_t r = str.size() - 1;
+    while (l < r) {
+        if (str[l] == ' ') {
+            ++l;
+        } else if (str[r] == ' ') {
+            --r;
+        } else if (str[l] == str[r]) {
+            ++l;
+            --r;
+        } else {
+            return false;
+        }
+    }
+    return true;
 }
