@@ -11,7 +11,8 @@ char Increase(char c, size_t shift) {
     const int alphabet_size = 26;
     size_t num = GetNum(c);
     if ('A' <= c && c <= 'Z') {
-        return (num < shift) ? static_cast<char>('A' + num - shift + alphabet_size) : static_cast<char>('A' + num - shift);
+        return (num < shift) ? static_cast<char>('A' + num - shift + alphabet_size)
+                             : static_cast<char>('A' + num - shift);
     }
     return (num < shift) ? static_cast<char>('a' + num - shift + alphabet_size) : static_cast<char>('a' + num - shift);
 }
