@@ -1,26 +1,26 @@
 #include "range.h"
 
 std::vector<int> Range(int from, int to, int step) {
-    std::vector<int> ans = std::vector<int>();
+    std::vector<int> range;
     if (step == 0) {
-        return ans;
+        return range;
     }
     if (step > 0) {
         if (from >= to) {
-            return ans;
+            return range;
         }
         while (from < to) {
-            ans.push_back(from);
+            range.push_back(from);
             from += step;
         }
     } else {
         if (from <= to) {
-            return ans;
+            return range;
         }
         while (from > to) {
-            ans.push_back(from);
+            range.push_back(from);
             from += step;
         }
     }
-    return ans;
+    return range;
 }
