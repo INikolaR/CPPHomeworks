@@ -3,9 +3,9 @@
 #include <climits>
 
 int** BuildDiagonalArray(size_t lines, size_t columns) {
-    int** ans = new int*[lines];
+    int** matrix = new int*[lines];
     for (size_t i = 0; i < lines; ++i) {
-        ans[i] = new int[columns];
+        matrix[i] = new int[columns];
     }
     int counter = 0;
     size_t i = 0;
@@ -19,7 +19,7 @@ int** BuildDiagonalArray(size_t lines, size_t columns) {
             j = diag_counter;
         }
         while (i < lines) {
-            ans[i][j] = counter++;
+            matrix[i][j] = counter++;
             ++i;
             if (j == 0) {
                 break;
@@ -27,5 +27,5 @@ int** BuildDiagonalArray(size_t lines, size_t columns) {
             --j;
         }
     }
-    return ans;
+    return matrix;
 }
