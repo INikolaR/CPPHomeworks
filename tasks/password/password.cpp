@@ -25,9 +25,9 @@ bool ValidatePassword(const std::string& password) {
     bool has_lower = false;
     bool has_upper = false;
     bool has_other = false;
-    const int min_length = 8;
-    const int max_length = 14;
-    if (password.length() < min_length || password.length() > max_length) {
+    const int MIN_LENGTH = 8;
+    const int MAX_LENGTH = 14;
+    if (password.length() < MIN_LENGTH || password.length() > MAX_LENGTH) {
         return false;
     }
     for (size_t i = 0; i < password.length(); ++i) {
@@ -39,6 +39,6 @@ bool ValidatePassword(const std::string& password) {
         has_upper = has_upper || IsUpper(password[i]);
         has_other = has_other || IsOther(password[i]);
     }
-    int sum = (has_digits ? 1 : 0) + (has_lower ? 1 : 0) + (has_upper ? 1 : 0) + (has_other ? 1 : 0);
+    int sum = has_digits + has_lower + has_upper + has_other;
     return sum >= 3;
 }
