@@ -6,7 +6,9 @@ Stack::Stack() {
 }
 
 Stack::~Stack() {
-    delete head_;
+    while (!this->Empty()) {
+        this->Pop();
+    }
 }
 
 void Stack::Push(int32_t value) {
@@ -22,7 +24,9 @@ void Stack::Pop() {
 }
 
 void Stack::Clear() {
-    delete head_;
+    while (!this->Empty()) {
+        this->Pop();
+    }
     size_ = 0;
 }
 
