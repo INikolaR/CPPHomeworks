@@ -1,5 +1,7 @@
 #include "caesar_cipher.h"
 
+const int ALPHABET_SIZE = 26;
+
 size_t GetNum(char c) {
     if ('A' <= c && c <= 'Z') {
         return c - 'A';
@@ -8,20 +10,20 @@ size_t GetNum(char c) {
 }
 
 char Increase(char c, size_t shift) {
-    const int alphabet_size = 26;
+
     size_t num = GetNum(c);
     if ('A' <= c && c <= 'Z') {
-        return (num < shift) ? static_cast<char>('A' + num - shift + alphabet_size)
+        return (num < shift) ? static_cast<char>('A' + num - shift + ALPHABET_SIZE)
                              : static_cast<char>('A' + num - shift);
     }
-    return (num < shift) ? static_cast<char>('a' + num - shift + alphabet_size) : static_cast<char>('a' + num - shift);
+    return (num < shift) ? static_cast<char>('a' + num - shift + ALPHABET_SIZE) : static_cast<char>('a' + num - shift);
 }
 
 std::string Decipher(const std::string& cipher, size_t shift) {
 
-    std::string ans;
+    std::string deciphered;
     for (size_t i = 0; i < cipher.length(); ++i) {
-        ans += Increase(cipher[i], shift);
+        deciphered += Increase(cipher[i], shift);
     }
-    return ans;
+    return deciphered;
 }
