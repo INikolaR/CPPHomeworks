@@ -93,7 +93,7 @@ Array<T>::Array(const Array& other) : size_(other.size()), data_(new T[size_]) {
 template <class T>
 Array<T>::~Array() {
     if (data_) {
-        delete data_;
+        delete[] data_;
     }
 }
 
@@ -124,7 +124,7 @@ typename Array<T>::Iterator Array<T>::end() const {
 template <class T>
 Array<T>& Array<T>::operator=(const Array& other) {
     if (data_) {
-        delete data_;
+        delete[] data_;
     }
     size_ = other.size_;
     data_ = new T[size_];
