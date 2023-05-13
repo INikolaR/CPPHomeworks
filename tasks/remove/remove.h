@@ -1,12 +1,11 @@
 #pragma once
 
-template<typename T, typename U>
+template <typename T, typename U>
 T Find(T begin, T end, U value) {
     while (begin != end) {
         if (*begin == value) {
             break;
-        }
-        else {
+        } else {
             ++begin;
         }
     }
@@ -25,4 +24,3 @@ T Remove(T begin, T end, U value) {
     }
     return first;
 }
-
