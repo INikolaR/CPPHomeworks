@@ -12,7 +12,7 @@ private:
 public:
     Array();
 
-    Array(size_t size);
+    explicit Array(size_t size);
 
     Array(std::initializer_list<T> list);
 
@@ -30,7 +30,7 @@ public:
 
     class Iterator {
     public:
-        Iterator(T* current);
+        explicit Iterator(T* current);
 
         Iterator& operator++();
 
