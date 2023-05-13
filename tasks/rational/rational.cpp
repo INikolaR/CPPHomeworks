@@ -5,8 +5,8 @@ void Rational::Set(int64_t numer, int64_t denom) {
         throw RationalDivisionByZero{};
     }
     int64_t gcd = std::gcd(numer, denom);
-    numer_ = numer / gcd;
-    denom_ = denom / gcd;
+    numer_ = static_cast<int>(numer / gcd);
+    denom_ = static_cast<int>(denom / gcd);
     if (denom_ < 0) {
         denom_ *= -1;
         numer_ *= -1;
