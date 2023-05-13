@@ -75,7 +75,7 @@ Array<T>::Array(size_t size) : data_(new T[size]), size_(size) {
 }
 
 template <class T>
-Array<T>::Array(std::initializer_list<T> list) : size_(list.size()), data_(new T[size_]){
+Array<T>::Array(std::initializer_list<T> list) : size_(list.size()), data_(new T[size_]) {
     size_t index = 0;
     for (auto elem : list) {
         data_[index++] = elem;
@@ -83,7 +83,7 @@ Array<T>::Array(std::initializer_list<T> list) : size_(list.size()), data_(new T
 }
 
 template <class T>
-Array<T>::Array(const Array& other) : size_(other.size()), data_(new T[size_]){
+Array<T>::Array(const Array& other) : size_(other.size()), data_(new T[size_]) {
     size_t index = 0;
     for (auto elem : other) {
         data_[index++] = elem;
