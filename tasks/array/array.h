@@ -100,7 +100,9 @@ Array<T>::Array(const Array& other) {
 
 template <class T>
 Array<T>::~Array() {
-    delete data_;
+    if (data_) {
+        delete data_;
+    }
 }
 
 template <class T>
