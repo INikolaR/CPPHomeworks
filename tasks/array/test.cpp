@@ -31,7 +31,6 @@ TEST_CASE("Constructor from other array") {
     REQUIRE(b[1] == 3);
 }
 
-
 TEST_CASE("Test initializer list") {
     Array<int> a{1, 2, 3};
     REQUIRE(a[0] == 1);
