@@ -101,17 +101,17 @@ std::ostream& operator<<(std::ostream& os, const Rational& ratio) {
 }
 
 Rational& operator*=(Rational& lhs, const Rational& rhs) {
-    lhs = lhs * rhs;
+    lhs.Set(lhs.GetNumerator() * rhs.GetNumerator(), lhs.GetDenominator() * rhs.GetDenominator());
     return lhs;
 }
 
 Rational& operator-=(Rational& lhs, const Rational& rhs) {
-    lhs = lhs - rhs;
+    lhs += -rhs;
     return lhs;
 }
 
 Rational& operator/=(Rational& lhs, const Rational& rhs) {
-    lhs = lhs / rhs;
+    lhs *= Rational(rhs.GetDenominator() * rhs.GetNumerator());
     return lhs;
 }
 
@@ -138,7 +138,8 @@ Rational& operator--(Rational& ratio) {
 }
 
 Rational& operator+=(Rational& lhs, const Rational& rhs) {
-    lhs = lhs + rhs;
+    lhs.Set(lhs.GetNumerator() * rhs.GetDenominator() + lhs.GetDenominator() * rhs.GetNumerator(),
+            lhs.GetDenominator() * rhs.GetDenominator());
     return lhs;
 }
 
