@@ -111,7 +111,7 @@ Rational& operator-=(Rational& lhs, const Rational& rhs) {
 }
 
 Rational& operator/=(Rational& lhs, const Rational& rhs) {
-    lhs *= Rational(rhs.GetDenominator() * rhs.GetNumerator());
+    lhs *= Rational(rhs.GetDenominator(), rhs.GetNumerator());
     return lhs;
 }
 
