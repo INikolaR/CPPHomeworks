@@ -18,7 +18,7 @@ T Remove(T begin, T end, U value) {
     if (first != end) {
         for (T it = first + 1; it != end; ++it) {
             if (*it != value) {
-                (*first++) = *it;
+                *(first++) = *it;
             }
         }
     }
