@@ -8,8 +8,7 @@ std::vector<std::string> StudentsOrder(const std::vector<StudentAction>& student
     for (const auto& student_action : student_actions) {
         if (student_action.side == Side::Top) {
             deque.push_front(student_action.name);
-        }
-        else {
+        } else {
             deque.push_back(student_action.name);
         }
     }
