@@ -1,6 +1,21 @@
 #include "tests_checking.h"
 
+#include <deque>
+
 std::vector<std::string> StudentsOrder(const std::vector<StudentAction>& student_actions,
                                        const std::vector<size_t>& queries) {
-    return {};
+    std::deque<std::string> deque;
+    for (const auto& student_action : student_actions) {
+        if (student_action.side == Side::Top) {
+            deque.push_front(student_action.name);
+        } else {
+            deque.push_back(student_action.name);
+        }
+    }
+    std::vector<std::string> names(queries.size());
+    int i = 0;
+    for (const auto& index : queries) {
+        names[i++] = deque[index - 1];
+    }
+    return names;
 }
