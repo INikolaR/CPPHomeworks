@@ -12,9 +12,10 @@ std::vector<std::string> StudentsOrder(const std::vector<StudentAction>& student
             deque.push_back(student_action.name);
         }
     }
-    std::vector<std::string> names{};
+    std::vector<std::string> names(queries.size());
+    int i = 0;
     for (const auto& index : queries) {
-        names.push_back(deque[index - 1]);
+        names[i++] = deque[index - 1];
     }
     return names;
 }
