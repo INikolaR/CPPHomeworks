@@ -1,8 +1,7 @@
 #include "provinces.h"
 
 #include <cstdint>
-
-#include<set>
+#include <set>
 
 int64_t CountPassports(const std::vector<int>& provinces) {
     std::set<int64_t> provinces_set{};
