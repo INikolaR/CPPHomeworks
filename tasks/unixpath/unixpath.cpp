@@ -19,10 +19,10 @@ std::deque<std::string_view> AddPathToDeque(std::deque<std::string_view> current
             current_path.push_back(dir);
         }
         i = j;
-        while (path[i] == '/' && i < path.length() - 1) {
+        while (i < path.length() && path[i] == '/') {
             ++i;
         }
-        if (j == path.length() - 1) {
+        if (i >= path.length() - 1) {
             break;
         }
     }
