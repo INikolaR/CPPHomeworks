@@ -4,7 +4,7 @@
 #include <set>
 
 int64_t CountPassports(const std::vector<int>& provinces) {
-    std::set<int64_t> provinces_set{};
+    std::multiset<int64_t> provinces_set{};
     for (const auto& province : provinces) {
         provinces_set.insert(province);
     }
