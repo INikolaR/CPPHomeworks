@@ -41,6 +41,12 @@ std::string DequeToPath(std::deque<std::string_view> deque) {
 
 std::string NormalizePath(std::string_view current_working_dir, std::string_view path) {
     std::deque<std::string_view> current_path{};
+    if (path.empty()) {
+        path = ".";
+    }
+    if (current_working_dir.empty()) {
+        current_working_dir = "/";
+    }
     if (path[0] == '/') {
         return DequeToPath(AddPathToDeque(current_path, path.substr(1)));
     } else {
