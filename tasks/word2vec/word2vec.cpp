@@ -1,5 +1,6 @@
 #include "word2vec.h"
 
+#include <climits>
 #include <vector>
 
 int64_t Scalar(const std::vector<int>& first_vector, const std::vector<int>& second_vector) {
