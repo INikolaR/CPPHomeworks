@@ -17,11 +17,10 @@ std::vector<std::string> FindClosestWords(const std::vector<std::string>& words,
     int64_t max_count = 0;
     for (size_t i = 1; i < words.size(); ++i) {
         scalars[i] = Scalar(vectors[0], vectors[i]);
-        if(scalars[i] > max) {
+        if (scalars[i] > max) {
             max_count = 1;
             max = scalars[i];
-        }
-        else if (scalars[i] == max) {
+        } else if (scalars[i] == max) {
             ++max_count;
         }
     }
