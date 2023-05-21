@@ -13,6 +13,9 @@ int64_t Scalar(const std::vector<int>& first_vector, const std::vector<int>& sec
 
 std::vector<std::string> FindClosestWords(const std::vector<std::string>& words,
                                           const std::vector<std::vector<int>>& vectors) {
+    if (vectors.size() < 2) {
+        return {};
+    }
     std::vector<int64_t> scalars(words.size());
     int64_t max = Scalar(vectors[0], vectors[1]);
     int64_t max_count = 1;
