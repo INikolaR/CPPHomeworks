@@ -38,7 +38,7 @@ ScoreTable GetScoredStudents(const Events& events, time_t score_time) {
     }
     for (const auto& student : students) {
         for (const auto& task : opened_merge_requests[student]) {
-            completed_tasks.erase(task);
+            completed_tasks[student].erase(task);
         }
         if (completed_tasks[student].empty()) {
             completed_tasks.erase(student);
