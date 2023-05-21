@@ -1,5 +1,6 @@
 #include "admission.h"
 
+#include <algorithm>
 #include <tuple>
 
 const bool Comparator(const Applicant*& first_applicant, const Applicant*& second_applicant) {
