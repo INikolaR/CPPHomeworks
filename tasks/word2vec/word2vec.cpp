@@ -18,6 +18,7 @@ std::vector<std::string> FindClosestWords(const std::vector<std::string>& words,
     }
     std::vector<int64_t> scalars(words.size());
     int64_t max = Scalar(vectors[0], vectors[1]);
+    scalars[1] = max;
     int64_t max_count = 1;
     for (size_t i = 2; i < words.size(); ++i) {
         scalars[i] = Scalar(vectors[0], vectors[i]);
