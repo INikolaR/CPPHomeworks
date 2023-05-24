@@ -34,6 +34,8 @@ ScoreTable GetScoredStudents(const Events& events, time_t score_time) {
             case EventType::MergeRequestClosed:
                 opened_merge_requests[event->student_name].erase(event->task_name);
                 break;
+            default:
+                break;
         }
     }
     for (const auto& student : students) {
