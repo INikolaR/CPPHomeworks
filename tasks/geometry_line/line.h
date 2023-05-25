@@ -1,5 +1,6 @@
 #pragma once
 #include "i_shape.h"
+#include "segment.h"
 #include "point.h"
 #include "vector.h"
 
