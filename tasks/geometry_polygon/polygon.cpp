@@ -48,9 +48,9 @@ bool Polygon::ContainsPoint(const geometry::Point &point) const {
     }
     std::vector<Vector> vectors(num_points_);
     GetVectors(points_, vectors);
-    bool is_positive = ScalarMult(vectors[num_points_ - 1], vectors[0]) > 0;
+    bool is_positive = ScalarMult(vectors[num_points_ - 1], vectors[0]) >= 0;
     for (size_t i = 0; i < num_points_ - 1; ++i) {
-        if ((ScalarMult(vectors[i + 1], vectors[i]) > 0) != is_positive) {
+        if ((ScalarMult(vectors[i + 1], vectors[i]) >= 0) != is_positive) {
             return false;
         }
     }
