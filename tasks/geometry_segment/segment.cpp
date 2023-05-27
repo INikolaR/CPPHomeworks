@@ -53,8 +53,15 @@ bool Segment::CrossesSegment(const Segment& segment) const {
     if (segment.Degenerate()) {
         return ContainsPoint(segment.start_);
     }
-    return Line(start_, end_).CrossesSegment(segment) &&
-           Line(segment.GetStart(), segment.GetEnd()).CrossesSegment(*this);
+    Line line_this = Line(start_, end_);
+    Line line_that = Line(segment.start_, segment.end_);
+    if (line_this.GetA() == line_that.GetA() && line_this.GetB() == line_that.GetB() &&
+        line_this.GetC() == line_that.GetC()) {
+        return ContainsPoint(segment.GetStart()) || ContainsPoint(segment.GetEnd()) ||
+               segment.ContainsPoint(GetStart()) || segment.ContainsPoint(GetEnd());
+    }
+    return (Line(start_, end_).CrossesSegment(segment) &&
+            Line(segment.GetStart(), segment.GetEnd()).CrossesSegment(*this));
 }
 
 Segment* Segment::Clone() const {
