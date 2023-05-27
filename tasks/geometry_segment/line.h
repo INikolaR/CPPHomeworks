@@ -3,6 +3,7 @@
 
 #include "i_shape.h"
 #include "point.h"
+#include "segment.h"
 
 namespace geometry {
 class Line : public IShape {
