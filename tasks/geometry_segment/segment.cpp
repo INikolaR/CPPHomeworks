@@ -49,10 +49,12 @@ bool Segment::ContainsPoint(const Point& point) const {
 bool Segment::CrossesSegment(const Segment& segment) const {
     if (Degenerate()) {
         return segment.ContainsPoint(start_);
-    } else {
-        return Line(start_, end_).CrossesSegment(segment) &&
-               Line(segment.GetStart(), segment.GetEnd()).CrossesSegment(*this);
     }
+    if (segment.Degenerate()) {
+        return ContainsPoint(segment.start_);
+    }
+    return Line(start_, end_).CrossesSegment(segment) &&
+           Line(segment.GetStart(), segment.GetEnd()).CrossesSegment(*this);
 }
 
 Segment* Segment::Clone() const {
