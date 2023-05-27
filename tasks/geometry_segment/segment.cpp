@@ -1,18 +1,32 @@
 #include "segment.h"
 
+#include <numeric>
+
 #include "line.h"
 
 namespace geometry {
 bool LinesAreEqual(Line a, Line b) {
-    if (a.GetC() < b.GetC()) {
-        std::swap(a, b);
-    }
-    // now a.GetC() >= b.GetC();
-    if (a.GetC() % b.GetC() != 0) {
-        return false;
-    }
-    int64_t d = a.GetC() / b.GetC();
-    return a.GetA() == b.GetA() * d && a.GetB() == b.GetB() * d;
+    //    if (a.GetC() < b.GetC()) {
+    //        std::swap(a, b);
+    //    }
+    //    // now a.GetC() >= b.GetC();
+    //    if (a.GetC() == 0 && b.GetC() == 0) {
+    //        if (a.GetA() == 0 && b.GetA() == 0) {
+    //            return a.GetB() % b.GetB() == 0;
+    //        }
+    //    }
+    //    if (a.GetC() % b.GetC() != 0) {
+    //        return false;
+    //    }
+    int64_t a_gcd = std::gcd(a.GetA(), std::gcd(a.GetB(), a.GetC()));
+    int64_t b_gcd = std::gcd(b.GetA(), std::gcd(b.GetB(), b.GetC()));
+    int64_t a_a = a.GetA() / a_gcd;
+    int64_t a_b = a.GetB() / a_gcd;
+    int64_t a_c = a.GetC() / a_gcd;
+    int64_t b_a = b.GetA() / b_gcd;
+    int64_t b_b = b.GetB() / b_gcd;
+    int64_t b_c = b.GetC() / b_gcd;
+    return (a_a == b_a && a_b == b_b && a_c == b_c) || (a_a == -b_a && a_b == -b_b && a_c == -b_c);
 }
 
 Segment::Segment() {
