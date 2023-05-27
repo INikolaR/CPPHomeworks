@@ -36,10 +36,10 @@ bool Point::ContainsPoint(const Point& point) const {
 
 bool Point::CrossesSegment(const Segment& segment) const {
     Vector first(x_coord_ - segment.GetStart().x_coord_, y_coord_ - segment.GetStart().y_coord_);
-    Vector second(segment.GetEnd().x_coord_ - x_coord_, segment.GetEnd().y_coord_ - y_coord_);
+    Vector second(x_coord_ - segment.GetEnd().x_coord_, y_coord_ - segment.GetEnd().y_coord_);
     Vector seg_vect(segment.GetEnd().x_coord_ - segment.GetStart().x_coord_,
                     segment.GetEnd().y_coord_ - segment.GetStart().y_coord_);
-    return ScalarMult(first, seg_vect) * ScalarMult(second, seg_vect) <= 0 && VectorMult(first, seg_vect) == 0;
+    return ScalarMult(first, seg_vect) * ScalarMult(second, seg_vect) < 0 && VectorMult(first, seg_vect) == 0;
 }
 
 Point* Point::Clone() const {
