@@ -36,6 +36,13 @@ Segment& Segment::Move(const Vector& vector) {
 }
 
 bool Segment::ContainsPoint(const Point& point) const {
+    if (Degenerate()) {
+        if (Segment(start_, point).Degenerate()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     return point.CrossesSegment(*this);
 }
 
