@@ -3,7 +3,7 @@
 #include "line.h"
 
 namespace geometry {
-bool lines_are_equal(Line a, Line b) {
+bool LinesAreEqual(Line a, Line b) {
     if (a.GetC() < b.GetC()) {
         std::swap(a, b);
     }
@@ -67,7 +67,7 @@ bool Segment::CrossesSegment(const Segment& segment) const {
     }
     Line line_this = Line(start_, end_);
     Line line_that = Line(segment.start_, segment.end_);
-    if (lines_are_equal(line_this, line_that)) {
+    if (LinesAreEqual(line_this, line_that)) {
         return ContainsPoint(segment.GetStart()) || ContainsPoint(segment.GetEnd()) ||
                segment.ContainsPoint(GetStart()) || segment.ContainsPoint(GetEnd());
     }
