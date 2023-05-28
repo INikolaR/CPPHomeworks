@@ -25,6 +25,12 @@ bool Circle::ContainsPoint(const geometry::Point &point) const {
 }
 
 bool Circle::CrossesSegment(const geometry::Segment &segment) const {
+    Vector start = segment.GetStart() - centre_;
+    Vector end = segment.GetEnd() - centre_;
+    if (start.GetX() * start.GetX() + start.GetY() * start.GetY() == radius_ * radius_ ||
+        end.GetX() * end.GetX() + end.GetY() * end.GetY() == radius_ * radius_) {
+        return true;
+    }
     if (ContainsPoint(segment.GetStart()) && ContainsPoint(segment.GetEnd())) {
         return false;
     }
