@@ -3,12 +3,14 @@
 #include "segment.h"
 
 namespace geometry {
-void GetVectors(std::vector<Point> points, std::vector<Vector> &out_vectors) {
-    out_vectors.resize(points.size());
-    for (size_t i = 0; i < points.size() - 1; ++i) {
-        out_vectors[i] = points[i + 1] - points[i];
+bool InTriangle(const Point &p, const Point &p1, const Point &p2, const Point &p3) {
+    if (VectorMult(p2 - p1, p3 - p2) == 0) {
+        return Segment(p1, p2).ContainsPoint(p) || Segment(p1, p3).ContainsPoint(p) || Segment(p2, p3).ContainsPoint(p);
     }
-    out_vectors[points.size() - 1] = points[0] - points[points.size() - 1];
+    int64_t mult1 = VectorMult(p2 - p1, p - p1);
+    int64_t mult2 = VectorMult(p3 - p2, p - p2);
+    int64_t mult3 = VectorMult(p1 - p3, p - p3);
+    return (mult1 >= 0 && mult2 >= 0 && mult3 >= 0) || (mult1 <= 0 && mult2 <= 0 && mult3 <= 0);
 }
 
 void GetSegments(std::vector<Point> points, std::vector<Segment> &out_segments) {
@@ -46,15 +48,12 @@ bool Polygon::ContainsPoint(const geometry::Point &point) const {
     if (num_points_ == 2) {
         return Segment(points_[0], points_[1]).ContainsPoint(point);
     }
-    std::vector<Vector> vectors(num_points_);
-    GetVectors(points_, vectors);
-    bool is_positive = VectorMult(vectors[num_points_ - 1], point - points_[num_points_ - 1]) >= 0;
-    for (size_t i = 0; i < num_points_ - 1; ++i) {
-        if ((VectorMult(vectors[i], point - points_[i]) >= 0) != is_positive) {
-            return false;
+    for (size_t i = 1; i < num_points_ - 1; ++i) {
+        if (InTriangle(point, points_[0], points_[i], points_[i + 1])) {
+            return true;
         }
     }
-    return true;
+    return false;
 }
 
 bool Polygon::CrossesSegment(const geometry::Segment &segment) const {
