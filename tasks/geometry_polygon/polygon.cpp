@@ -48,12 +48,22 @@ bool Polygon::ContainsPoint(const geometry::Point &point) const {
     if (num_points_ == 2) {
         return Segment(points_[0], points_[1]).ContainsPoint(point);
     }
-    for (size_t i = 1; i < num_points_ - 1; ++i) {
-        if (InTriangle(point, points_[0], points_[i], points_[i + 1])) {
-            return true;
+    std::vector points = std::vector(points_);
+    for (size_t t = 0; t < num_points_; ++t) {
+        bool is_in = false;
+        for (size_t i = 1; i < num_points_ - 1; ++i) {
+            if (InTriangle(point, points[0], points[i], points[i + 1])) {
+                is_in = true;
+                break;
+            }
         }
+        if (!is_in) {
+            return false;
+        }
+        points.push_back(points[0]);
+        points.erase(points.begin());
     }
-    return false;
+    return true;
 }
 
 bool Polygon::CrossesSegment(const geometry::Segment &segment) const {
