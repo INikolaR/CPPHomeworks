@@ -32,6 +32,5 @@ public:
     Segment* Clone() const override {
         return nullptr;
     };
-
 };
 }  // namespace geometry
