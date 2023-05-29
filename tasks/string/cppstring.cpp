@@ -187,7 +187,6 @@ void String::Resize(size_t new_size, char symbol) {
     if (data_ != nullptr) {
         delete[] data_;
     }
-
     size_ = new_size;
     capacity_ = new_size;
     data_ = new char[new_size];
