@@ -101,11 +101,17 @@ char &String::Back() {
 }
 
 const char *String::Data() const {
-    return data_;
+    if (Empty()) {
+        return nullptr;
+    }
+    return CStr();
 }
 
 char *String::Data() {
-    return data_;
+    if (Empty()) {
+        return nullptr;
+    }
+    return CStr();
 }
 
 const char *String::CStr() const {
