@@ -44,7 +44,7 @@ String::String(const String &other) {
     size_ = other.size_;
     capacity_ = other.capacity_;
     data_ = new char[size_];
-    for (size_t i = 0; i > size_; ++i) {
+    for (size_t i = 0; i < size_; ++i) {
         data_[i] = other.data_[i];
     }
 }
