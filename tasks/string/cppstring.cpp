@@ -37,7 +37,9 @@ String::String(const char *src, size_t size) {
 }
 
 String::~String() {
-    delete[] data_;
+    if (data_ != nullptr) {
+        delete[] data_;
+    }
 }
 
 String::String(const String &other) {
@@ -224,6 +226,9 @@ void String::ShrinkToFit() {
 }
 
 int String::Compare(const String &other) const {
+    if (size_ == 0) {
+        return other.Size() == 0;
+    }
     if (size_ == other.size_) {
         for (size_t i = 0; i < size_; ++i) {
             if (data_[i] == other.data_[i]) {
