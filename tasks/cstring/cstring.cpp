@@ -35,10 +35,16 @@ int Strncmp(const char *first, const char *second, size_t count) {
         return 0;
     }
     while (first[i] != '\0' && second[i] != '\0' && i < count) {
-        if (first[i] != second[i]) {
-            return first[i] - second[i];
+        if (first[i] < second[i]) {
+            return -1;
+        }
+        if (first[i] > second[i]) {
+            return 1;
         }
         ++i;
+    }
+    if (i == count) {
+        return 0;
     }
     if (first[i] == '\0') {
         if (second[i] == '\0') {
