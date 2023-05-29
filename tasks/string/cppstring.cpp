@@ -101,11 +101,11 @@ char &String::Back() {
 }
 
 const char *String::Data() const {
-    return data_;
+    return CStr();
 }
 
 char *String::Data() {
-    return data_;
+    return CStr();
 }
 
 const char *String::CStr() const {
