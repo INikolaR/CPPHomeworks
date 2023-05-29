@@ -113,6 +113,7 @@ const char *String::CStr() const {
     for (size_t i = 0; i < size_; ++i) {
         cstr[i] = data_[i];
     }
+    cstr[size_] = '\0';
     return cstr;
 }
 
