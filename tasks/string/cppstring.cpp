@@ -166,7 +166,9 @@ void String::Swap(String &other) {
 }
 
 void String::PopBack() {
-    --size_;
+    if (!Empty()) {
+        --size_;
+    }
 }
 
 void String::PushBack(char c) {
@@ -230,7 +232,7 @@ void String::ShrinkToFit() {
 
 int String::Compare(const String &other) const {
     if (size_ == 0) {
-        return other.Size() == 0;
+        return other.Size() != 0;
     }
     if (size_ == other.size_) {
         for (size_t i = 0; i < size_; ++i) {
