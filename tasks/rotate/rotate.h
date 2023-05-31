@@ -1,6 +1,6 @@
 #pragma once
 
-#include <algorithm>
+#include <utility>
 
 template <typename Iterator>
 void Reverse(Iterator begin, Iterator end) {
