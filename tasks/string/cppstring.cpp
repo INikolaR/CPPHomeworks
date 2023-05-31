@@ -81,10 +81,16 @@ char &String::operator[](size_t idx) {
 }
 
 const char &String::At(size_t idx) const {
+    if (idx >= size_) {
+        throw StringOutOfRange{};
+    }
     return data_[idx];
 }
 
 char &String::At(size_t idx) {
+    if (idx >= size_) {
+        throw StringOutOfRange{};
+    }
     return data_[idx];
 }
 
