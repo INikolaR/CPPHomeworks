@@ -212,8 +212,11 @@ void String::Reserve(size_t new_capacity) {
     if (new_capacity == capacity_) {
         return;
     }
-    if (new_capacity < size_) {
+    if (new_capacity <= size_) {
         ShrinkToFit();
+        return;
+    }
+    if (new_capacity < capacity_) {
         return;
     }
     char *old_data = data_;
@@ -258,10 +261,10 @@ String operator+(const String &first, const String &second) {
     String concat = String();
     concat.Reserve(first.size_ + second.size_);
     for (size_t i = 0; i < first.size_; ++i) {
-        concat[i] = first[i];
+        concat.PushBack(first[i]);
     }
     for (size_t i = 0; i < second.size_; ++i) {
-        concat[first.size_ + i] = second[i];
+        concat.PushBack(second[i]);
     }
     concat.data_[first.size_ + second.size_] = '\0';
     return concat;
