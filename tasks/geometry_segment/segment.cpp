@@ -1,23 +1,12 @@
 #include "segment.h"
 
+#include <algorithm>
 #include <numeric>
 
 #include "line.h"
 
 namespace geometry {
 bool LinesAreEqual(Line a, Line b) {
-    //    if (a.GetC() < b.GetC()) {
-    //        std::swap(a, b);
-    //    }
-    //    // now a.GetC() >= b.GetC();
-    //    if (a.GetC() == 0 && b.GetC() == 0) {
-    //        if (a.GetA() == 0 && b.GetA() == 0) {
-    //            return a.GetB() % b.GetB() == 0;
-    //        }
-    //    }
-    //    if (a.GetC() % b.GetC() != 0) {
-    //        return false;
-    //    }
     int64_t a_gcd = std::gcd(a.GetA(), std::gcd(a.GetB(), a.GetC()));
     int64_t b_gcd = std::gcd(b.GetA(), std::gcd(b.GetB(), b.GetC()));
     int64_t a_a = a.GetA() / a_gcd;
@@ -38,9 +27,11 @@ Segment::Segment(Point start, Point end) {
     start_ = start;
     end_ = end;
 }
+
 Point Segment::GetStart() const {
     return start_;
 }
+
 Point Segment::GetEnd() const {
     return end_;
 }
@@ -63,11 +54,7 @@ Segment& Segment::Move(const Vector& vector) {
 
 bool Segment::ContainsPoint(const Point& point) const {
     if (Degenerate()) {
-        if (Segment(start_, point).Degenerate()) {
-            return true;
-        } else {
-            return false;
-        }
+        return (Segment(start_, point).Degenerate();
     }
     return point.CrossesSegment(*this);
 }
