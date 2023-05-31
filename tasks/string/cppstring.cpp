@@ -47,7 +47,7 @@ String::~String() {
 String::String(const String &other) {
     size_ = other.size_;
     capacity_ = other.capacity_;
-    data_ = new char[size_];
+    data_ = new char[capacity_];
     for (size_t i = 0; i < size_; ++i) {
         data_[i] = other.data_[i];
     }
@@ -59,7 +59,7 @@ String &String::operator=(const String &other) {
     }
     size_ = other.size_;
     capacity_ = other.capacity_;
-    data_ = new char[size_];
+    data_ = new char[capacity_];
     for (size_t i = 0; i < size_; ++i) {
         data_[i] = other.data_[i];
     }
@@ -232,7 +232,7 @@ void String::ShrinkToFit() {
 
 int String::Compare(const String &other) const {
     if (size_ == 0) {
-        return other.Size() != 0;
+        return other.Size() == 0 ? 0 : -1;
     }
     if (size_ == other.size_) {
         for (size_t i = 0; i < size_; ++i) {
@@ -243,19 +243,14 @@ int String::Compare(const String &other) const {
         }
         return 0;
     } else {
-        return static_cast<int>(this->size_ - other.size_);
+        return static_cast<int>(this->size_) - static_cast<int>(other.size_);
     }
 }
 
 String &String::operator+=(const String &other) {
-    if (other.Empty()) {
-        return *this;
+    for (size_t i = 0; i < other.Size(); ++i) {
+        PushBack(other[i]);
     }
-    Reserve(size_ + other.size_);
-    for (size_t i = 0; i < other.size_; ++i) {
-        data_[size_ + i] = other.data_[i];
-    }
-    size_ += other.size_;
     return *this;
 }
 
