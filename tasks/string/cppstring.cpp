@@ -212,11 +212,8 @@ void String::Reserve(size_t new_capacity) {
     if (new_capacity == capacity_) {
         return;
     }
-    if (new_capacity <= size_) {
+    if (new_capacity < size_) {
         ShrinkToFit();
-        return;
-    }
-    if (new_capacity < capacity_) {
         return;
     }
     char *old_data = data_;
