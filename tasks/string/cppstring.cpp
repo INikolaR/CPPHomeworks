@@ -1,5 +1,7 @@
 #include "cppstring.h"
 
+#include <utility>
+
 String::String() {
     size_ = 0;
     capacity_ = 0;
