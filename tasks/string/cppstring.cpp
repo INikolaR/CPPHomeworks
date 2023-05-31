@@ -191,14 +191,13 @@ void String::PushBack(char c) {
 }
 
 void String::Resize(size_t new_size, char symbol) {
-    if (data_ != nullptr) {
-        delete[] data_;
+    if (new_size < size_) {
+        size_ = new_size;
+        return;
     }
-    size_ = new_size;
-    capacity_ = new_size;
-    data_ = new char[new_size];
-    for (size_t i = 0; i < new_size; ++i) {
-        data_[i] = symbol;
+    Reserve(new_size);
+    while (size_ < new_size) {
+        data_[size_++] = symbol;
     }
 }
 
