@@ -152,6 +152,7 @@ size_t String::Capacity() const {
 
 void String::Clear() {
     delete[] data_;
+    data_ = nullptr;
     size_ = 0;
     capacity_ = 0;
 }
