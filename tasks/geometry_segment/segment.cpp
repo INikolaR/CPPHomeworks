@@ -54,7 +54,7 @@ Segment& Segment::Move(const Vector& vector) {
 
 bool Segment::ContainsPoint(const Point& point) const {
     if (Degenerate()) {
-        return (Segment(start_, point).Degenerate();
+        return Segment(start_, point).Degenerate();
     }
     return point.CrossesSegment(*this);
 }
