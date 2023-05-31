@@ -154,7 +154,9 @@ size_t String::Capacity() const {
 }
 
 void String::Clear() {
-    delete[] data_;
+    if (data_ != nullptr) {
+        delete[] data_;
+    }
     data_ = new char[1]{'\0'};
     size_ = 0;
     capacity_ = 0;
@@ -211,15 +213,7 @@ void String::Reserve(size_t new_capacity) {
         return;
     }
     if (new_capacity < size_) {
-        char *old_data = data_;
-        size_ = new_capacity;
-        capacity_ = new_capacity;
-        data_ = new char[new_capacity + 1];
-        for (size_t i = 0; i < new_capacity; ++i) {
-            data_[i] = old_data[i];
-        }
-        data_[size_] = '\0';
-        delete[] old_data;
+        ShrinkToFit();
         return;
     }
     char *old_data = data_;
