@@ -1,5 +1,6 @@
 #include "cppstring.h"
 
+#include <algorithm>
 #include <utility>
 
 String::String() {
@@ -237,19 +238,20 @@ void String::ShrinkToFit() {
 }
 
 int String::Compare(const String &other) const {
-    if (size_ == 0) {
-        return other.Size() == 0 ? 0 : -1;
-    }
-    if (size_ == other.size_) {
-        for (size_t i = 0; i < size_; ++i) {
-            if (data_[i] == other.data_[i]) {
-                continue;
-            }
+    size_t min_size = std::min(Size(), other.Size());
+    for (size_t i = 0; i < min_size; ++i) {
+        if (data_[i] != other.data_[i]) {
             return data_[i] - other.data_[i];
         }
-        return 0;
+    }
+    if (Size() == min_size) {
+        if (other.Size() == min_size) {
+            return 0;
+        } else {
+            return -1;
+        }
     } else {
-        return static_cast<int>(size_) - static_cast<int>(other.Size());
+        return 1;
     }
 }
 
