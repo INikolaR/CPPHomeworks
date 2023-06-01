@@ -158,7 +158,7 @@ void String::Clear() {
     if (data_ != nullptr) {
         delete[] data_;
     }
-    data_ = new char[1]{'\0'};
+    data_ = new char[1]();
     size_ = 0;
     capacity_ = 0;
 }
