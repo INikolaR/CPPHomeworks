@@ -6,17 +6,16 @@
 String::String() {
     size_ = 0;
     capacity_ = 0;
-    data_ = new char[1]{'\0'};
+    data_ = nullptr;
 }
 
 String::String(size_t size, char symbol) {
     size_ = size;
     capacity_ = size;
-    data_ = new char[size_ + 1];
+    data_ = new char[size_];
     for (size_t i = 0; i < size_; ++i) {
         data_[i] = symbol;
     }
-    data_[size_] = '\0';
 }
 
 String::String(const char *src) {
@@ -24,22 +23,20 @@ String::String(const char *src) {
     while (src[size_] != '\0') {
         ++size_;
     }
-    data_ = new char[size_ + 1];
+    data_ = new char[size_];
     capacity_ = size_;
     for (size_t i = 0; i < size_; ++i) {
         data_[i] = src[i];
     }
-    data_[size_] = '\0';
 }
 
 String::String(const char *src, size_t size) {
     size_ = size;
-    data_ = new char[size + 1];
+    data_ = new char[size];
     capacity_ = size_;
     for (size_t i = 0; i < size_; ++i) {
         data_[i] = src[i];
     }
-    data_[size_] = '\0';
 }
 
 String::~String() {
@@ -51,11 +48,10 @@ String::~String() {
 String::String(const String &other) {
     size_ = other.size_;
     capacity_ = other.capacity_;
-    data_ = new char[capacity_ + 1];
+    data_ = new char[capacity_];
     for (size_t i = 0; i < size_; ++i) {
         data_[i] = other.data_[i];
     }
-    data_[size_] = '\0';
 }
 
 String &String::operator=(const String &other) {
@@ -64,11 +60,10 @@ String &String::operator=(const String &other) {
     }
     size_ = other.size_;
     capacity_ = other.capacity_;
-    data_ = new char[capacity_ + 1];
+    data_ = new char[capacity_];
     for (size_t i = 0; i < size_; ++i) {
         data_[i] = other.data_[i];
     }
-    data_[size_] = '\0';
     return *this;
 }
 
@@ -117,16 +112,10 @@ char &String::Back() {
 }
 
 const char *String::Data() const {
-    if (Empty()) {
-        return nullptr;
-    }
     return data_;
 }
 
 char *String::Data() {
-    if (Empty()) {
-        return nullptr;
-    }
     return data_;
 }
 
@@ -158,7 +147,7 @@ void String::Clear() {
     if (data_ != nullptr) {
         delete[] data_;
     }
-    data_ = new char[1]();
+    data_ = nullptr;
     size_ = 0;
     capacity_ = 0;
 }
@@ -172,7 +161,6 @@ void String::Swap(String &other) {
 void String::PopBack() {
     if (!Empty()) {
         --size_;
-        data_[size_] = '\0';
     }
 }
 
@@ -180,12 +168,12 @@ void String::PushBack(char c) {
     if (capacity_ == 0) {
         size_ = 1;
         capacity_ = 1;
-        data_ = new char[2]{c, '\0'};
+        data_ = new char[1]{c};
         return;
     }
     if (size_ >= capacity_) {
         char *old_data = data_;
-        data_ = new char[(capacity_ << 1) + 1];
+        data_ = new char[capacity_ << 1];
         for (size_t i = 0; i < capacity_; ++i) {
             data_[i] = old_data[i];
         }
@@ -193,20 +181,17 @@ void String::PushBack(char c) {
         delete[] old_data;
     }
     data_[size_++] = c;
-    data_[size_] = '\0';
 }
 
 void String::Resize(size_t new_size, char symbol) {
     if (new_size < size_) {
         size_ = new_size;
-        data_[size_] = '\0';
         return;
     }
     Reserve(new_size);
     while (size_ < new_size) {
         data_[size_++] = symbol;
     }
-    data_[size_] = '\0';
 }
 
 void String::Reserve(size_t new_capacity) {
@@ -218,22 +203,20 @@ void String::Reserve(size_t new_capacity) {
     }
     char *old_data = data_;
     capacity_ = new_capacity;
-    data_ = new char[new_capacity + 1];
+    data_ = new char[new_capacity];
     for (size_t i = 0; i < size_; ++i) {
         data_[i] = old_data[i];
     }
-    data_[size_] = '\0';
     delete[] old_data;
 }
 
 void String::ShrinkToFit() {
     char *old_data = data_;
     capacity_ = size_;
-    data_ = new char[capacity_ + 1];
+    data_ = new char[capacity_];
     for (size_t i = 0; i < size_; ++i) {
         data_[i] = old_data[i];
     }
-    data_[size_] = '\0';
     delete[] old_data;
 }
 
@@ -271,7 +254,6 @@ String operator+(const String &first, const String &second) {
     for (size_t i = 0; i < second.size_; ++i) {
         concat.PushBack(second[i]);
     }
-    concat.data_[first.size_ + second.size_] = '\0';
     return concat;
 }
 
@@ -304,4 +286,10 @@ bool operator>=(const String &first, const String &second) {
 
 bool operator<=(const String &first, const String &second) {
     return first.Compare(second) <= 0;
+}
+
+void SafeCpy(char *dest, const char *src, size_t len) {
+    for (size_t i = 0; i < len; ++i) {
+        dest[i] = src[i];
+    }
 }
