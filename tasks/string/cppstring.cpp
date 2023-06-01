@@ -205,7 +205,7 @@ void String::Resize(size_t new_size, char symbol) {
     while (size_ < new_size) {
         data_[size_++] = symbol;
     }
-    data_[size_] = 0;
+    data_[size_] = '\0';
 }
 
 void String::Reserve(size_t new_capacity) {
