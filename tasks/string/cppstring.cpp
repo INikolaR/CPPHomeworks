@@ -249,7 +249,7 @@ int String::Compare(const String &other) const {
         }
         return 0;
     } else {
-        return static_cast<int>(other.Size()) - static_cast<int>(this->size_);
+        return static_cast<int>(size_) - static_cast<int>(other.Size());
     }
 }
 
