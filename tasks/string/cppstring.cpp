@@ -212,8 +212,7 @@ void String::Reserve(size_t new_capacity) {
     if (new_capacity == capacity_) {
         return;
     }
-    if (new_capacity < size_) {
-        ShrinkToFit();
+    if (new_capacity < capacity_) {
         return;
     }
     char *old_data = data_;
@@ -227,7 +226,14 @@ void String::Reserve(size_t new_capacity) {
 }
 
 void String::ShrinkToFit() {
-    Reserve(size_);
+    char *old_data = data_;
+    capacity_ = size_;
+    data_ = new char[capacity_ + 1];
+    for (size_t i = 0; i < size_; ++i) {
+        data_[i] = old_data[i];
+    }
+    data_[size_] = '\0';
+    delete[] old_data;
 }
 
 int String::Compare(const String &other) const {
