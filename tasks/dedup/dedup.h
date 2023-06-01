@@ -19,7 +19,7 @@ std::vector<std::unique_ptr<T>> Duplicate(const std::vector<std::shared_ptr<T>>&
 template <class T>
 std::vector<std::shared_ptr<T>> DeDuplicate(const std::vector<std::unique_ptr<T>>& items) {
     struct Comp {
-        bool operator()(const std::shared_ptr<T>& lsh, const std::shared_ptr<T>& rsh) {
+        bool operator()(const std::shared_ptr<T>& lsh, const std::shared_ptr<T>& rsh) const {
             return *lsh < *rsh;
         }
     };
@@ -27,9 +27,9 @@ std::vector<std::shared_ptr<T>> DeDuplicate(const std::vector<std::unique_ptr<T>
     std::vector<std::shared_ptr<T>> vec;
     std::set<std::shared_ptr<T>, Comp> pool;
     for (const auto& item : items) {
-        auto copy = std::make_shared<T>(item);
+        auto copy = std::make_shared<T>(*item);
         auto copy_copy = *pool.insert(copy).first;
-        vec.push_back(copy);
+        vec.push_back(copy_copy);
     }
     return vec;
 }
