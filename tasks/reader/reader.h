@@ -18,20 +18,24 @@ public:
     virtual size_t Read(char* buf, size_t len) = 0;
 };
 
+std::string ReadAll(Reader* in);
+
 class StringReader : public Reader {
 public:
     StringReader(const std::string& data);
-    size_t Read(char* buf, size_t len);
+
+    virtual size_t Read(char* buf, size_t len) override;
 
 private:
-    const std::string& data_;
+    std::string data_;
     size_t pos_ = 0;
 };
 
 class FdReader : public Reader {
 public:
     FdReader(int fd);
-    size_t Read(char* buf, size_t len);
+
+    virtual size_t Read(char* buf, size_t len) override;
 
 private:
     int fd_;
