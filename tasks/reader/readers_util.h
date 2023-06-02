@@ -50,7 +50,7 @@ private:
     size_t current_;
 };
 
-char Hex2num(char c) {
+char HexToNum(char c) {
     if ('0' <= c && c <= '9') {
         return c - '0';
     }
@@ -67,7 +67,7 @@ public:
         std::string raw(len * 2, '\0');
         size_t read_len = reader_->Read(&(raw[0]), raw.size());
         for (size_t i = 0; i < read_len; i += 2) {
-            buf[i / 2] = (Hex2num(raw[i] << 4)) | Hex2num(raw[i + 1]);
+            buf[i / 2] = (HexToNum(raw[i] << 4)) | HexToNum(raw[i + 1]);
         }
         return read_len / 2;
     }
