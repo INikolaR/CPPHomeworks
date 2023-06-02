@@ -120,6 +120,7 @@ const char *String::Data() const {
     if (Empty()) {
         return nullptr;
     }
+    data_[size_] = ' ';
     return data_;
 }
 
@@ -127,6 +128,7 @@ char *String::Data() {
     if (Empty()) {
         return nullptr;
     }
+    data_[size_] = ' ';
     return data_;
 }
 
