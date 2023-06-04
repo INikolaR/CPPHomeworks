@@ -25,7 +25,7 @@ public:
         move.ptr_ = nullptr;
         return *this;
     }
-    
+
     void Reset(T* target) {
         if (ptr_ != nullptr) {
             delete ptr_;
