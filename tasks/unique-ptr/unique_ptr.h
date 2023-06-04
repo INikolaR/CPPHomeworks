@@ -6,8 +6,10 @@ public:
     explicit UniquePtr(T* object) {
         ptr_ = object;
     }
+
     UniquePtr() {
     }
+
     UniquePtr(const UniquePtr& copy) = delete;
     UniquePtr(UniquePtr&& move) {
         ptr_ = move.ptr_;
@@ -23,6 +25,7 @@ public:
         move.ptr_ = nullptr;
         return *this;
     }
+    
     void Reset(T* target) {
         if (ptr_ != nullptr) {
             delete ptr_;
