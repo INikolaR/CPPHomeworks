@@ -14,7 +14,7 @@ public:
         limit_ = limit;
     }
 
-    virtual size_t Read(char* buf, size_t len) override {
+    size_t Read(char* buf, size_t len) override {
         size_t max_read = std::min(len, limit_);
         size_t ret = reader_->Read(buf, max_read);
         limit_ -= ret;
@@ -33,7 +33,7 @@ public:
         current_ = 0;
     }
 
-    virtual size_t Read(char* buf, size_t len) {
+    size_t Read(char* buf, size_t len) override {
         while (true) {
             if (current_ == readers_.size()) {
                 return 0;
@@ -58,7 +58,7 @@ public:
         reader_.swap(reader);
     }
 
-    virtual size_t Read(char* buf, size_t len) {
+    size_t Read(char* buf, size_t len) override {
         std::string raw(len * 2, '\0');
         size_t read_len = reader_->Read(&(raw[0]), raw.size());
         for (size_t i = 0; i < read_len; i += 2) {
