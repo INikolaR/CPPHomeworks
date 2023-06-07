@@ -1,5 +1,9 @@
 #pragma once
 
+#include <cstdio>
+#include <initializer_list>
+#include <iterator>
+
 template <class T>
 class Vector {
 public:
@@ -18,7 +22,7 @@ public:
         }
     }
 
-    Vector(std::initializer_list<int> init_list) {
+    explicit Vector(std::initializer_list<int> init_list) {
         data_ = new T[init_list.size()];
         size_ = 0;
         capacity_ = init_list.size();
