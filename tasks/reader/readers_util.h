@@ -5,6 +5,8 @@
 
 #include "reader.h"
 
+const int TEN = 10;
+
 class LimitReader : public Reader {
 public:
     LimitReader(std::unique_ptr<Reader> reader, size_t limit) {
@@ -26,7 +28,7 @@ private:
 
 class TeeReader : public Reader {
 public:
-    TeeReader(std::vector<std::unique_ptr<Reader>> readers) {
+    explicit TeeReader(std::vector<std::unique_ptr<Reader>> readers) {
         readers_.swap(readers);
         current_ = 0;
     }
@@ -50,16 +52,9 @@ private:
     size_t current_;
 };
 
-char HexToNum(char c) {
-    if ('0' <= c && c <= '9') {
-        return c - '0';
-    }
-    return c - 'A' + 10;
-}
-
 class HexDecodingReader : public Reader {
 public:
-    HexDecodingReader(std::unique_ptr<Reader> reader) {
+    explicit HexDecodingReader(std::unique_ptr<Reader> reader) {
         reader_.swap(reader);
     }
 
@@ -67,7 +62,9 @@ public:
         std::string raw(len * 2, '\0');
         size_t read_len = reader_->Read(&(raw[0]), raw.size());
         for (size_t i = 0; i < read_len; i += 2) {
-            buf[i / 2] = (HexToNum(raw[i] << 4)) | HexToNum(raw[i + 1]);
+            int c1 = '0' <= raw[i] && raw[i] <= '9' ? raw[i] - '0' : raw[i] - 'A' + TEN;
+            int c2 = '0' <= raw[i + 1] && raw[i + 1] <= '9' ? raw[i + 1] - '0' : raw[i + 1] - 'A' + TEN;
+            buf[i / 2] = static_cast<char>((c1 << 4) | c2);
         }
         return read_len / 2;
     }
