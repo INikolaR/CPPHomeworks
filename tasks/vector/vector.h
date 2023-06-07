@@ -3,6 +3,7 @@
 #include <cstdio>
 #include <initializer_list>
 #include <iterator>
+#include <utility>
 
 template <class T>
 class Vector {
@@ -108,13 +109,7 @@ public:
             return;
         }
         if (size_ == capacity_) {
-            T* old_data = data_;
-            data_ = new T[capacity_ << 1];
-            for (size_t i = 0; i < size_; ++i) {
-                data_[i] = old_data[i];
-            }
-            capacity_ <<= 1;
-            delete[] old_data;
+            Reserve(capacity_ << 1);
         }
         data_[size_++] = element;
     }
