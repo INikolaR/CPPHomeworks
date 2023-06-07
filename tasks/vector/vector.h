@@ -22,7 +22,7 @@ public:
         }
     }
 
-    explicit Vector(std::initializer_list<int> init_list) {
+    Vector(std::initializer_list<int> init_list) {
         data_ = new T[init_list.size()];
         size_ = 0;
         capacity_ = init_list.size();
