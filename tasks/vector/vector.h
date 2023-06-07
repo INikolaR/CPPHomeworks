@@ -147,37 +147,37 @@ public:
             pointer_ = nullptr;
         }
 
-        Iterator& operator+=(size_t index) {
+        Iterator& operator+=(int index) {
             pointer_ += index;
             return *this;
         }
 
-        friend Iterator operator+(const Iterator& it, size_t index) {
+        friend Iterator operator+(const Iterator& it, int index) {
             return Iterator(it.pointer_ + index);
         }
 
-        friend Iterator operator+(size_t index, const Iterator& it) {
+        friend Iterator operator+(int index, const Iterator& it) {
             return Iterator(it.pointer_ + index);
         }
 
-        Iterator& operator-=(size_t index) {
+        Iterator& operator-=(int index) {
             pointer_ -= index;
             return *this;
         }
 
-        friend Iterator operator-(const Iterator& it, size_t index) {
+        friend Iterator operator-(const Iterator& it, int index) {
             return Iterator(it.pointer_ - index);
         }
 
-        friend size_t operator-(const Iterator& a, const Iterator& b) {
+        friend int operator-(const Iterator& a, const Iterator& b) {
             return a.pointer_ - b.pointer_;
         }
 
-        friend size_t operator==(const Iterator& a, const Iterator& b) {
+        friend bool operator==(const Iterator& a, const Iterator& b) {
             return a.pointer_ == b.pointer_;
         }
 
-        friend size_t operator!=(const Iterator& a, const Iterator& b) {
+        friend bool operator!=(const Iterator& a, const Iterator& b) {
             return a.pointer_ != b.pointer_;
         }
 
