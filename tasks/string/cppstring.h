@@ -1,8 +1,8 @@
 #ifndef STRING_H
 #define STRING_H
 
-#include <stdexcept>
 #include <iostream>
+#include <stdexcept>
 
 class StringOutOfRange : public std::out_of_range {
 public:
