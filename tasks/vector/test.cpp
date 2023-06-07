@@ -1,5 +1,4 @@
 #include <catch.hpp>
-#include <string>
 #include <vector>
 
 #include "vector.h"
