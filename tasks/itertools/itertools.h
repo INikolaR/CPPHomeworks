@@ -101,7 +101,7 @@ public:
         for (;;) {
             auto prev = curr_;
             ++curr_;
-            if (curr_ != end_ || *curr_ != *prev) {
+            if (curr_ == end_ || *curr_ != *prev) {
                 break;
             }
         }
@@ -110,7 +110,7 @@ public:
 
     auto operator*() const {
         T next = curr_;
-        while (next != end_ && *next != *curr_) {
+        while (next != end_ && *next == *curr_) {
             ++next;
         }
         return IteratorRange(curr_, next);
