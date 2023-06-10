@@ -33,6 +33,7 @@ public:
     Any& operator=(const T& value) {
         delete ptr_;
         ptr_ = new Inner<T>(value);
+        return *this;
     }
 
     Any(const Any& rhs);
