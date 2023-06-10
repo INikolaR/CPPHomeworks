@@ -2,15 +2,38 @@
 
 class Any {
 private:
-public:
+    struct InnerBase {
+        virtual ~InnerBase() {
+        }
+        virtual InnerBase* Clone() const = 0;
+    };
 
+    template <class T>
+    struct Inner : public InnerBase {
+        explicit Inner(const T& val) : value(val) {
+        }
+
+        InnerBase* Clone() const override {
+            return new Inner<T>(value);
+        }
+
+        T value;
+    };
+
+    InnerBase* ptr_ = nullptr;
+
+public:
     Any();
 
     template <class T>
-    explicit Any(const T& value);
+    explicit Any(const T& value) : ptr_(new Inner<T>(value)) {
+    }
 
     template <class T>
-    Any& operator=(const T& value);
+    Any& operator=(const T& value) {
+        delete ptr_;
+        ptr_ = new Inner<T>(value);
+    }
 
     Any(const Any& rhs);
     Any& operator=(Any rhs);
@@ -22,5 +45,7 @@ public:
     void Swap(Any& rhs);
 
     template <class T>
-    const T& GetValue() const;
+    const T& GetValue() const {
+        return dynamic_cast<Inner<T>&>(*ptr_).value;
+    }
 };
