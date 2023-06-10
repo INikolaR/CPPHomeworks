@@ -7,30 +7,30 @@
 
 namespace geometry {
 class Segment : public IShape {
- private:
-  Point start_;
-  Point end_;
+private:
+    Point start_;
+    Point end_;
 
- public:
-  Segment();
+public:
+    Segment();
 
-  Segment(Point, Point);
+    Segment(Point, Point);
 
-  Point GetStart() const;
+    Point GetStart() const;
 
-  Point GetEnd() const;
+    Point GetEnd() const;
 
-  double Distance(Point) const;
+    double Distance(Point) const;
 
-  bool Degenerate() const;
+    bool Degenerate() const;
 
-  Segment& Move(const Vector& vector) override;
+    Segment& Move(const Vector& vector) override;
 
-  bool ContainsPoint(const Point& point) const override;
+    bool ContainsPoint(const Point& point) const override;
 
-  bool CrossesSegment(const Segment& segment) const override;
+    bool CrossesSegment(const Segment& segment) const override;
 
-  Segment* Clone() const override;
+    Segment* Clone() const override;
 };
 }  // namespace geometry
 
