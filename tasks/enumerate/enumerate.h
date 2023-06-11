@@ -53,5 +53,5 @@ auto Enumerate(T& c) {
         T r(1);
         return IteratorRange(EnumerateIterator(c.begin(), *r.begin()), EnumerateIterator(c.end(), *r.begin()));
     }
-    return IteratorRange(EnumerateIterator(c.begin(), *c.begin()), EnumerateIterator(c.end(), *c.end()));
+    return IteratorRange(EnumerateIterator(c.begin(), *c.begin()), EnumerateIterator(c.end(), *c.begin()));
 }
