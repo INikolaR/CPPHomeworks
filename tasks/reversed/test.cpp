@@ -1,8 +1,7 @@
-#include <catch.hpp>
-
 #include <array>
-#include <vector>
+#include <catch.hpp>
 #include <list>
+#include <vector>
 
 #include "reversed.h"
 #include "reversed.h"  // check include guards

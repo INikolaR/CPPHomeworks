@@ -42,20 +42,7 @@ private:
     U& value_;
 };
 
-class EmptyIterator {
-public:
-    EmptyIterator() {
-    }
-
-    bool operator!=(const EmptyIterator& i) {
-        return false;
-    }
-};
-
 template <class T>
 auto Reversed(T& c) {
-    if (c.empty()) {
-        return IteratorRange(EmptyIterator(), EmptyIterator());
-    }
     return IteratorRange(ReversedIterator(--c.end(), *(--c.end())), ReversedIterator(--c.begin(), *(--c.end())));
 }
