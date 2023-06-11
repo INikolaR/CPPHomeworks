@@ -46,7 +46,7 @@ template <class T>
 auto Reversed(T& c) {
     if (c.empty()) {
         T t(1);
-        return IteratorRange(ReversedIterator(--c.end(), *t.begin()), ReversedIterator(--c.begin(), *t.begin()));
+        return IteratorRange(ReversedIterator(c.end(), *t.begin()), ReversedIterator(c.begin(), *t.begin()));
     }
     return IteratorRange(ReversedIterator(--c.end(), *(--c.end())), ReversedIterator(--c.begin(), *(--c.end())));
 }
