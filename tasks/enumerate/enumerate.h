@@ -26,7 +26,6 @@ public:
 
     EnumerateIterator& operator++() {
         ++ptr_;
-        value_ = *ptr_;
         ++index_;
         return *this;
     }
@@ -47,6 +46,10 @@ private:
 };
 
 template <class T>
-auto Enumerate(T c) {
+auto Enumerate(T& c) {
+    if (c.empty()) {
+        T r(1);
+        return IteratorRange(EnumerateIterator(c.begin(), *r.begin()), EnumerateIterator(c.end(), *r.begin()));
+    }
     return IteratorRange(EnumerateIterator(c.begin(), *c.begin()), EnumerateIterator(c.end(), *c.end()));
 }
