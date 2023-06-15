@@ -1,11 +1,11 @@
-#include <catch.hpp>
+#include <list.h>
 
+#include <catch.hpp>
+#include <iostream>
+#include <memory>
+#include <random>
 #include <string>
 #include <vector>
-#include <random>
-#include <memory>
-
-#include <list.h>
 
 TEST_CASE("Empty list works", "[List]") {
     List<int> l1;
@@ -179,9 +179,11 @@ TEST_CASE("List behaves like a vector", "[List]") {
             }
             case 4: {
                 REQUIRE(list.Size() == vector.size());
-                int i = 0;
+                int j = 0;
+                std::cout << "size: " << list.Size() << " " << vector.size() << '\n';
                 for (const auto& element : list) {
-                    REQUIRE(element == vector[i++]);
+                    std::cout << element << " " << vector[j] << '\n';
+                    REQUIRE(element == vector[j++]);
                 }
 
                 break;
