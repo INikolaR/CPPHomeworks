@@ -9,10 +9,11 @@ public:
     ListNode() : value_(nullptr), next_(this), prev_(this) {
     }
 
-    explicit ListNode(T* value) : value_(value), next_(this), prev_(this) {
+    explicit ListNode(T* const& value) : value_(nullptr), next_(this), prev_(this) {
+        value_ = new T(*value);
     }
 
-    ListNode(T value) : value_(new T(value)), next_(this), prev_(this) {
+    explicit ListNode(T value) : value_(new T(value)), next_(this), prev_(this) {
     }
 
     ListNode* Prev() {
