@@ -6,12 +6,18 @@
 template <typename KeyT>
 class UnorderedSet {
 public:
-    UnorderedSet();
-    explicit UnorderedSet(size_t count);
+    UnorderedSet() : n_elements_(0), data_() {
+    }
+    explicit UnorderedSet(size_t count) : n_elements_(count), data_(count) {
+    }
     template <typename IteratorType,
               typename = std::enable_if_t<std::is_base_of_v<
                   std::forward_iterator_tag, typename std::iterator_traits<IteratorType>::iterator_category>>>
-    UnorderedSet(IteratorType first, IteratorType last);
+    UnorderedSet(IteratorType first, IteratorType last) {
+        for (auto i = first; i != last; ++i) {
+            Insert(*i);
+        }
+    }
     UnorderedSet(const UnorderedSet& other);
     UnorderedSet(UnorderedSet&& other);
     ~UnorderedSet() = default;
