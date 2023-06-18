@@ -1,7 +1,6 @@
-#include <catch.hpp>
-
 #include <smart_ptr.h>
 
+#include <catch.hpp>
 #include <string>
 
 using std::string;
