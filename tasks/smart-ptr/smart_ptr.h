@@ -45,6 +45,19 @@ public:
     }
 
     void Reset(T* ptr) {
+        --counter_->strong_count;
+        if (counter_->strong_count == 0) {
+            if (counter_->weak_count == 0) {
+                if (counter_ != nullptr) {
+                    delete counter_;
+                    counter_ = nullptr;
+                }
+            }
+            if (ptr_ != nullptr) {
+                delete ptr_;
+                ptr_ = nullptr;
+            }
+        }
         ptr_ = ptr;
         counter_ = new Counter();
         counter_->strong_count = 1;
