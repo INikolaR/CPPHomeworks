@@ -211,11 +211,11 @@ private:
 };
 
 template <typename T>
-typename List<T>::Iterator begin(List<T>& list) {
+typename List<T>::Iterator begin(List<T>& list) {  // NOLINT
     return list.Begin();
 }
 
 template <typename T>
-typename List<T>::Iterator end(List<T>& list) {
+typename List<T>::Iterator end(List<T>& list) {  // NOLINT
     return list.End();
 }
