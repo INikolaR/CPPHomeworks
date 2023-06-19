@@ -27,6 +27,9 @@ public:
     SharedPtr(const SharedPtr<T>& rhs) : ptr_(nullptr), counter_(nullptr) {
         ptr_ = rhs.ptr_;
         counter_ = rhs.counter_;
+        if (counter_->strong_count == 0) {
+            ptr_ = nullptr;
+        }
         counter_->strong_count += 1;
     }
 
