@@ -70,15 +70,9 @@ public:
         --counter_->strong_count;
         if (counter_->strong_count == 0) {
             if (counter_->weak_count == 0) {
-                if (counter_ != nullptr) {
-                    delete counter_;
-                    counter_ = nullptr;
-                }
+                delete counter_;
             }
-            if (ptr_ != nullptr) {
-                delete ptr_;
-                ptr_ = nullptr;
-            }
+            delete ptr_;
         }
     }
 
@@ -119,10 +113,7 @@ public:
     ~WeakPtr() {
         --counter_->weak_count;
         if (counter_->strong_count == 0 && counter_->weak_count == 0) {
-            if (counter_ != nullptr) {
-                delete counter_;
-                counter_ = nullptr;
-            }
+            delete counter_;
         }
     }
 
