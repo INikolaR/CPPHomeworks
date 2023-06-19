@@ -10,7 +10,6 @@ public:
     }
 
     explicit ListNode(T* const& value) : value_(nullptr), next_(this), prev_(this) {
-        value_ = new T(*value);
     }
 
     explicit ListNode(T value) : value_(new T(value)), next_(this), prev_(this) {
@@ -97,6 +96,7 @@ public:
 
     List() : ptr_(new ListNode<T>()), size_(0) {
     }
+
     List(const List& list) {
         ptr_ = new ListNode<T>();
         auto it = list.ptr_->Prev();
@@ -151,7 +151,7 @@ public:
         ++size_;
     }
     void PushBack(T&& elem) {
-        LinkAfter(ptr_->Prev(), new ListNode<T>(&elem));
+        LinkAfter(ptr_->Prev(), new ListNode<T>(std::move(&elem)));
         ++size_;
     }
     void PushFront(const T& elem) {
@@ -159,8 +159,9 @@ public:
         ++size_;
     }
     void PushFront(T&& elem) {
-        LinkAfter(ptr_, new ListNode(&elem));
+        LinkAfter(ptr_, new ListNode(std::move(&elem)));
         ++size_;
+        elem = T();
     }
 
     T& Front() {
@@ -170,7 +171,7 @@ public:
         return ptr_->Next()->Value();
     }
     T& Back() {
-        return *End();
+        return ptr_->Prev()->Value();
     }
     const T& Back() const {
         return ptr_->Prev()->Value();
