@@ -98,7 +98,8 @@ public:
         ListNode<T>* ptr_ = nullptr;
     };
 
-    List() : ptr_(new ListNode<T>()), size_(0) {
+    List() : ptr_(nullptr), size_(0) {
+        ptr_ = new ListNode<T>();
     }
 
     List(const List& list) {
