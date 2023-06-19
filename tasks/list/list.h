@@ -99,7 +99,6 @@ public:
     };
 
     List() : ptr_(nullptr), size_(0) {
-        ptr_ = new ListNode<T>();
     }
 
     List(const List& list) {
@@ -155,18 +154,30 @@ public:
     }
 
     void PushBack(const T& elem) {
+        if (ptr_ == nullptr) {
+            ptr_ = new ListNode<T>();
+        }
         LinkAfter(ptr_->Prev(), new ListNode<T>(elem));
         ++size_;
     }
     void PushBack(T&& elem) {
+        if (ptr_ == nullptr) {
+            ptr_ = new ListNode<T>();
+        }
         LinkAfter(ptr_->Prev(), new ListNode<T>(std::move(elem)));
         ++size_;
     }
     void PushFront(const T& elem) {
+        if (ptr_ == nullptr) {
+            ptr_ = new ListNode<T>();
+        }
         LinkAfter(ptr_, new ListNode<T>(elem));
         ++size_;
     }
     void PushFront(T&& elem) {
+        if (ptr_ == nullptr) {
+            ptr_ = new ListNode<T>();
+        }
         LinkAfter(ptr_, new ListNode<T>(std::move(elem)));
         ++size_;
     }
