@@ -9,10 +9,13 @@ public:
     ListNode() : value_(nullptr), next_(this), prev_(this) {
     }
 
-    explicit ListNode(T* const& value) : value_(nullptr), next_(this), prev_(this) {
+    explicit ListNode(T&& value) : value_(new T(std::move(value))), next_(this), prev_(this) {
     }
 
-    explicit ListNode(T value) : value_(new T(value)), next_(this), prev_(this) {
+    explicit ListNode(T& value) : value_(new T(value)), next_(this), prev_(this) {
+    }
+
+    explicit ListNode(T* value) : value_(value), next_(this), prev_(this) {
     }
 
     ListNode* Prev() {
@@ -33,6 +36,7 @@ public:
         }
         node->prev_->next_ = node->next_;
         node->next_->prev_ = node->prev_;
+        delete node->value_;
         delete node;
     }
 
@@ -62,7 +66,7 @@ public:
         }
         Iterator operator++(int) {
             auto old_ptr = ptr_;
-            ++ptr_;
+            ptr_ = ptr_->Next();
             return Iterator(old_ptr);
         }
 
@@ -72,7 +76,7 @@ public:
         }
         Iterator operator--(int) {
             auto old_ptr = ptr_;
-            --ptr_;
+            ptr_ = ptr_->Prev();
             return Iterator(old_ptr);
         }
 
@@ -101,41 +105,44 @@ public:
         ptr_ = new ListNode<T>();
         auto it = list.ptr_->Prev();
         while (it != list.ptr_) {
-            LinkAfter(ptr_, new ListNode(it->Value()));
+            LinkAfter(ptr_, new ListNode<T>(it->Value()));
             it = it->Prev();
         }
         size_ = list.Size();
     }
     List(List&& list) {
+        ptr_ = new ListNode<T>();
+        size_ = 0;
         std::swap(ptr_, list.ptr_);
         std::swap(size_, list.size_);
-        while (size_ != 0) {
-            list.PopBack();
-        }
-        delete &list;
     }
     ~List() {
         while (size_ != 0) {
             PopBack();
         }
+        delete ptr_;
     }
 
     List& operator=(const List& list) {
         ptr_ = new ListNode<T>();
         auto it = list.ptr_->Prev();
         while (it != list.ptr_) {
-            LinkAfter(ptr_, new ListNode(it->Value()));
+            LinkAfter(ptr_, new ListNode<T>(it->Value()));
             it = it->Prev();
         }
         size_ = list.Size();
         return *this;
     }
+
     List& operator=(List&& list) {
         std::swap(ptr_, list.ptr_);
         std::swap(size_, list.size_);
-        while (size_ != 0) {
-            PopBack();
+        while (list.size_ != 0) {
+            list.PopBack();
         }
+        delete list.ptr_;
+        list.ptr_ = new ListNode<T>();
+        list.size_ = 0;
         return *this;
     }
 
@@ -151,21 +158,20 @@ public:
         ++size_;
     }
     void PushBack(T&& elem) {
-        LinkAfter(ptr_->Prev(), new ListNode<T>(std::move(&elem)));
+        LinkAfter(ptr_->Prev(), new ListNode<T>(std::move(elem)));
         ++size_;
     }
     void PushFront(const T& elem) {
-        LinkAfter(ptr_, new ListNode(elem));
+        LinkAfter(ptr_, new ListNode<T>(elem));
         ++size_;
     }
     void PushFront(T&& elem) {
-        LinkAfter(ptr_, new ListNode(std::move(&elem)));
+        LinkAfter(ptr_, new ListNode<T>(std::move(elem)));
         ++size_;
-        elem = T();
     }
 
     T& Front() {
-        return *Begin();
+        return ptr_->Next()->Value();
     }
     const T& Front() const {
         return ptr_->Next()->Value();
@@ -196,7 +202,7 @@ public:
         return ++Iterator(ptr_);
     }
     Iterator End() {
-        return --Iterator(ptr_);
+        return Iterator(ptr_);
     }
 
 private:
@@ -211,5 +217,5 @@ typename List<T>::Iterator begin(List<T>& list) {
 
 template <typename T>
 typename List<T>::Iterator end(List<T>& list) {
-    return ++list.End();
+    return list.End();
 }

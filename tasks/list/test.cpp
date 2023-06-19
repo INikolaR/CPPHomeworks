@@ -1,7 +1,6 @@
 #include <list.h>
 
 #include <catch.hpp>
-#include <iostream>
 #include <memory>
 #include <random>
 #include <string>
@@ -179,11 +178,9 @@ TEST_CASE("List behaves like a vector", "[List]") {
             }
             case 4: {
                 REQUIRE(list.Size() == vector.size());
-                int j = 0;
-                std::cout << "size: " << list.Size() << " " << vector.size() << '\n';
+                int i = 0;
                 for (const auto& element : list) {
-                    std::cout << element << " " << vector[j] << '\n';
-                    REQUIRE(element == vector[j++]);
+                    REQUIRE(element == vector[i++]);
                 }
 
                 break;
