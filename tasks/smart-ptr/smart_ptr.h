@@ -37,14 +37,16 @@ public:
         return *this;
     }
 
-    SharedPtr(SharedPtr<T>&& rhs) : ptr_(nullptr), counter_(nullptr) {
+    SharedPtr(SharedPtr<T>&& rhs) : ptr_(nullptr), counter_(new Counter()) {
+        counter_->strong_count = 1;
         std::swap(ptr_, rhs.ptr_);
         std::swap(counter_, rhs.counter_);
     }
 
     SharedPtr& operator=(SharedPtr<T>&& rhs) {
         ptr_ = nullptr;
-        counter_ = nullptr;
+        counter_ = new Counter();
+        counter_->strong_count = 1;
         std::swap(ptr_, rhs.ptr_);
         std::swap(counter_, rhs.counter_);
         return *this;
@@ -121,6 +123,7 @@ public:
     }
 
     WeakPtr(WeakPtr<T>&& rhs) : ptr_(nullptr), counter_(new Counter()) {
+        counter_->weak_count = 1;
         std::swap(ptr_, rhs.ptr_);
         std::swap(counter_, rhs.counter_);
     }
@@ -134,7 +137,8 @@ public:
 
     WeakPtr& operator=(WeakPtr<T>&& rhs) {
         ptr_ = nullptr;
-        counter_ = nullptr;
+        counter_ = new Counter();
+        counter_->weak_count = 1;
         std::swap(ptr_, rhs.ptr_);
         std::swap(counter_, rhs.counter_);
         return *this;
