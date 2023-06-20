@@ -166,4 +166,5 @@ TEST_CASE("My own3") {
     WeakPtr<std::string> b = a;
     WeakPtr<std::string> c = b;
     WeakPtr<std::string> d = c;
+    SharedPtr<std::string> e;
 }
