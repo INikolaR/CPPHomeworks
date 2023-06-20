@@ -105,7 +105,7 @@ public:
         counter_->weak_count += 1;
     }
 
-    WeakPtr& operator=(const SharedPtr<T>& rhs) {
+    WeakPtr& operator=(const WeakPtr<T>& rhs) {
         ptr_ = rhs.Get();
         counter_ = rhs.GetCounter();
         counter_->weak_count += 1;

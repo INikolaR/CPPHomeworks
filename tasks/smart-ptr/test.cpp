@@ -157,3 +157,13 @@ TEST_CASE("My own2") {
     SharedPtr<std::string> q2 = q1;
     SharedPtr<std::string> q3 = q2;
 }
+
+TEST_CASE("My own3") {
+    WeakPtr<std::string> y;
+    WeakPtr<std::string> z(y);
+    WeakPtr<std::string> x(z);
+    WeakPtr<std::string> a = y;
+    WeakPtr<std::string> b = a;
+    WeakPtr<std::string> c = b;
+    WeakPtr<std::string> d = c;
+}
