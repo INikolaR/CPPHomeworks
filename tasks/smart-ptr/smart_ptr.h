@@ -37,16 +37,14 @@ public:
         return *this;
     }
 
-    SharedPtr(SharedPtr<T>&& rhs) : ptr_(nullptr), counter_(new Counter()) {
-        counter_->strong_count = 1;
+    SharedPtr(SharedPtr<T>&& rhs) : ptr_(nullptr), counter_(nullptr) {
         std::swap(ptr_, rhs.ptr_);
         std::swap(counter_, rhs.counter_);
     }
 
     SharedPtr& operator=(SharedPtr<T>&& rhs) {
         ptr_ = nullptr;
-        counter_ = new Counter();
-        counter_->strong_count = 1;
+        counter_ = nullptr;
         std::swap(ptr_, rhs.ptr_);
         std::swap(counter_, rhs.counter_);
         return *this;
@@ -67,12 +65,14 @@ public:
     }
 
     void Reset(T* ptr) {
-        --counter_->strong_count;
-        if (counter_->strong_count == 0) {
-            if (counter_->weak_count == 0) {
-                delete counter_;
+        if (counter_ != nullptr) {
+            --counter_->strong_count;
+            if (counter_->strong_count == 0) {
+                if (counter_->weak_count == 0) {
+                    delete counter_;
+                }
+                delete ptr_;
             }
-            delete ptr_;
         }
         ptr_ = ptr;
         counter_ = new Counter();
@@ -80,6 +80,9 @@ public:
     }
 
     ~SharedPtr() {
+        if (counter_ == nullptr) {
+            return;
+        }
         //        std::cout << "Called strong destructor, counter: strong = " << counter_->strong_count
         //                  << "; weak = " << counter_->weak_count << '\n';
         --counter_->strong_count;
@@ -122,8 +125,7 @@ public:
         return *this;
     }
 
-    WeakPtr(WeakPtr<T>&& rhs) : ptr_(nullptr), counter_(new Counter()) {
-        counter_->weak_count = 1;
+    WeakPtr(WeakPtr<T>&& rhs) : ptr_(nullptr), counter_(nullptr) {
         std::swap(ptr_, rhs.ptr_);
         std::swap(counter_, rhs.counter_);
     }
@@ -137,8 +139,7 @@ public:
 
     WeakPtr& operator=(WeakPtr<T>&& rhs) {
         ptr_ = nullptr;
-        counter_ = new Counter();
-        counter_->weak_count = 1;
+        counter_ = nullptr;
         std::swap(ptr_, rhs.ptr_);
         std::swap(counter_, rhs.counter_);
         return *this;
@@ -161,6 +162,9 @@ public:
     }
 
     ~WeakPtr() {
+        if (counter_ == nullptr) {
+            return;
+        }
         //        std::cout << "Called weak destructor, counter: strong = " << counter_->strong_count
         //                  << "; weak = " << counter_->weak_count << '\n';
         --counter_->weak_count;
