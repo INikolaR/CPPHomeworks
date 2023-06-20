@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <string>
+#include <utility>
 
 struct Counter {
     size_t strong_count = 0;
@@ -46,19 +47,6 @@ public:
         return *this;
     }
 
-    //    SharedPtr(SharedPtr<T>&& rhs) : ptr_(nullptr), counter_(nullptr) {
-    //        std::swap(ptr_, rhs.ptr_);
-    //        std::swap(counter_, rhs.counter_);
-    //    }
-
-    //    SharedPtr& operator=(SharedPtr<T>&& rhs) {
-    //        ptr_ = nullptr;
-    //        counter_ = nullptr;
-    //        std::swap(ptr_, rhs.ptr_);
-    //        std::swap(counter_, rhs.counter_);
-    //        return *this;
-    //    }
-
     explicit SharedPtr(const WeakPtr<T>& rhs);
 
     T* Get() const {
@@ -92,8 +80,6 @@ public:
         if (counter_ == nullptr) {
             return;
         }
-        //        std::cout << "Called strong destructor, counter: strong = " << counter_->strong_count
-        //                  << "; weak = " << counter_->weak_count << '\n';
         --counter_->strong_count;
         if (counter_->strong_count == 0) {
             if (counter_->weak_count == 0) {
@@ -140,26 +126,6 @@ public:
         return *this;
     }
 
-    //    WeakPtr(WeakPtr<T>&& rhs) : ptr_(nullptr), counter_(nullptr) {
-    //        std::swap(ptr_, rhs.ptr_);
-    //        std::swap(counter_, rhs.counter_);
-    //    }
-
-    //    WeakPtr& operator=(const SharedPtr<T>& rhs) {
-    //        ptr_ = rhs.Get();
-    //        counter_ = rhs.GetCounter();
-    //        counter_->weak_count += 1;
-    //        return *this;
-    //    }
-
-    //    WeakPtr& operator=(WeakPtr<T>&& rhs) {
-    //        ptr_ = nullptr;
-    //        counter_ = nullptr;
-    //        std::swap(ptr_, rhs.ptr_);
-    //        std::swap(counter_, rhs.counter_);
-    //        return *this;
-    //    }
-
     SharedPtr<T> Lock() {
         return SharedPtr(*this);
     }
@@ -180,11 +146,7 @@ public:
         if (counter_ == nullptr) {
             return;
         }
-        //        std::cout << "Called weak destructor, counter: strong = " << counter_->strong_count
-        //                  << "; weak = " << counter_->weak_count << '\n';
         --counter_->weak_count;
-        //        std::cout << "After DECREASING weak destructor, counter: strong = " << counter_->strong_count
-        //                  << "; weak = " << counter_->weak_count << '\n';
         if (counter_->strong_count == 0 && counter_->weak_count == 0) {
             delete counter_;
         }
