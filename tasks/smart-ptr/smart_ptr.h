@@ -27,10 +27,14 @@ public:
     SharedPtr(const SharedPtr<T>& rhs) : ptr_(nullptr), counter_(nullptr) {
         ptr_ = rhs.ptr_;
         counter_ = rhs.counter_;
-        if (counter_->strong_count == 0) {
-            ptr_ = nullptr;
-        }
         counter_->strong_count += 1;
+    }
+
+    SharedPtr& operator=(const SharedPtr<T>& rhs) {
+        ptr_ = rhs.ptr_;
+        counter_ = rhs.counter_;
+        counter_->strong_count += 1;
+        return *this;
     }
 
     explicit SharedPtr(const WeakPtr<T>& rhs);
@@ -51,15 +55,9 @@ public:
         --counter_->strong_count;
         if (counter_->strong_count == 0) {
             if (counter_->weak_count == 0) {
-                if (counter_ != nullptr) {
-                    delete counter_;
-                    counter_ = nullptr;
-                }
+                delete counter_;
             }
-            if (ptr_ != nullptr) {
-                delete ptr_;
-                ptr_ = nullptr;
-            }
+            delete ptr_;
         }
         ptr_ = ptr;
         counter_ = new Counter();
@@ -67,6 +65,8 @@ public:
     }
 
     ~SharedPtr() {
+        //        std::cout << "Called strong destructor, counter: strong = " << counter_->strong_count
+        //                  << "; weak = " << counter_->weak_count << '\n';
         --counter_->strong_count;
         if (counter_->strong_count == 0) {
             if (counter_->weak_count == 0) {
@@ -88,11 +88,35 @@ public:
         counter_->weak_count = 1;
     }
 
+    WeakPtr(const WeakPtr<T>& rhs) : ptr_(nullptr), counter_(nullptr) {
+        ptr_ = rhs.ptr_;
+        counter_ = rhs.counter_;
+        counter_->weak_count += 1;
+    }
+
+    //    WeakPtr(WeakPtr<T>&& rhs) : ptr_(nullptr), counter_(nullptr) {
+    //        ptr_ = std::move(rhs);
+    //        counter_ = std::move(rhs);
+    //    }
+
     explicit WeakPtr(const SharedPtr<T>& rhs) : ptr_(nullptr), counter_(nullptr) {
         ptr_ = rhs.Get();
         counter_ = rhs.GetCounter();
         counter_->weak_count += 1;
     }
+
+    WeakPtr& operator=(const SharedPtr<T>& rhs) {
+        ptr_ = rhs.Get();
+        counter_ = rhs.GetCounter();
+        counter_->weak_count += 1;
+        return *this;
+    }
+
+    //    WeakPtr& operator=(WeakPtr<T>&& rhs) {
+    //        ptr_ = std::move(rhs);
+    //        counter_ = std::move(rhs);
+    //        return *this;
+    //    }
 
     SharedPtr<T> Lock() {
         return SharedPtr(*this);
@@ -111,7 +135,11 @@ public:
     }
 
     ~WeakPtr() {
+        //        std::cout << "Called weak destructor, counter: strong = " << counter_->strong_count
+        //                  << "; weak = " << counter_->weak_count << '\n';
         --counter_->weak_count;
+        //        std::cout << "After DECREASING weak destructor, counter: strong = " << counter_->strong_count
+        //                  << "; weak = " << counter_->weak_count << '\n';
         if (counter_->strong_count == 0 && counter_->weak_count == 0) {
             delete counter_;
         }

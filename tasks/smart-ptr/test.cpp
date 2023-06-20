@@ -129,3 +129,31 @@ TEST_CASE("Shared from weak") {
     SharedPtr<std::string> z(y);
     REQUIRE(z.Get() == nullptr);
 }
+
+TEST_CASE("My own") {
+    SharedPtr<std::string>* x = new SharedPtr<std::string>(new string("aba"));
+    WeakPtr<std::string> y(*x);
+    WeakPtr<std::string> r(y);
+    WeakPtr<std::string> w(*x);
+    SharedPtr<std::string> z(*x);
+    delete x;
+    REQUIRE(!y.IsExpired());
+    SharedPtr<std::string> a(z);
+    SharedPtr<std::string> b(a);
+    SharedPtr<std::string> c(a);
+    SharedPtr<std::string> d(c);
+    SharedPtr<std::string> t(z);
+    SharedPtr<std::string> q(t);
+}
+
+TEST_CASE("My own2") {
+    SharedPtr<std::string>* x = new SharedPtr<std::string>(new string("aba"));
+    WeakPtr<std::string> y(*x);
+    WeakPtr<std::string> r(y);
+    WeakPtr<std::string> w(*x);
+    SharedPtr<std::string> z(*x);
+    SharedPtr<std::string> q = z;
+    SharedPtr<std::string> q1 = q;
+    SharedPtr<std::string> q2 = q1;
+    SharedPtr<std::string> q3 = q2;
+}
