@@ -60,10 +60,12 @@ public:
     public:
         explicit Iterator(auto ptr) : ptr_(ptr) {
         }
+
         Iterator& operator++() {
             ptr_ = ptr_->Next();
             return *this;
         }
+
         Iterator operator++(int) {
             auto old_ptr = ptr_;
             ptr_ = ptr_->Next();
@@ -74,6 +76,7 @@ public:
             ptr_ = ptr_->Prev();
             return *this;
         }
+
         Iterator operator--(int) {
             auto old_ptr = ptr_;
             ptr_ = ptr_->Prev();
@@ -83,6 +86,7 @@ public:
         T& operator*() const {
             return ptr_->Value();
         }
+
         T* operator->() const {
             return ptr_->value_;
         }
@@ -90,6 +94,7 @@ public:
         bool operator==(const Iterator& rhs) const {
             return ptr_ == rhs.ptr_;
         }
+
         bool operator!=(const Iterator& rhs) const {
             return ptr_ != rhs.ptr_;
         }
@@ -110,12 +115,14 @@ public:
         }
         size_ = list.Size();
     }
+
     List(List&& list) {
         ptr_ = new ListNode<T>();
         size_ = 0;
         std::swap(ptr_, list.ptr_);
         std::swap(size_, list.size_);
     }
+
     ~List() {
         while (size_ != 0) {
             PopBack();
@@ -149,6 +156,7 @@ public:
     bool IsEmpty() const {
         return size_ == 0;
     }
+
     size_t Size() const {
         return size_;
     }
@@ -160,6 +168,7 @@ public:
         LinkAfter(ptr_->Prev(), new ListNode<T>(elem));
         ++size_;
     }
+
     void PushBack(T&& elem) {
         if (ptr_ == nullptr) {
             ptr_ = new ListNode<T>();
@@ -167,6 +176,7 @@ public:
         LinkAfter(ptr_->Prev(), new ListNode<T>(std::move(elem)));
         ++size_;
     }
+
     void PushFront(const T& elem) {
         if (ptr_ == nullptr) {
             ptr_ = new ListNode<T>();
@@ -174,6 +184,7 @@ public:
         LinkAfter(ptr_, new ListNode<T>(elem));
         ++size_;
     }
+
     void PushFront(T&& elem) {
         if (ptr_ == nullptr) {
             ptr_ = new ListNode<T>();
@@ -185,12 +196,15 @@ public:
     T& Front() {
         return ptr_->Next()->Value();
     }
+
     const T& Front() const {
         return ptr_->Next()->Value();
     }
+
     T& Back() {
         return ptr_->Prev()->Value();
     }
+
     const T& Back() const {
         return ptr_->Prev()->Value();
     }
@@ -202,6 +216,7 @@ public:
         Unlink(ptr_->Prev());
         --size_;
     }
+
     void PopFront() {
         if (size_ == 0) {
             return;
@@ -213,6 +228,7 @@ public:
     Iterator Begin() {
         return ++Iterator(ptr_);
     }
+
     Iterator End() {
         return Iterator(ptr_);
     }
