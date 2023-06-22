@@ -1,6 +1,8 @@
 #pragma once
 
+#include <functional>
 #include <list>
+#include <utility>
 #include <vector>
 
 template <typename KeyT>
